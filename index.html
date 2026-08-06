@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FM LeadAI — intelligent lead qualification demo by FMSolutionsPro." />
+  <title>FM LeadAI | Intelligent Lead Qualification</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#">
+      <span class="brand-mark">FM</span>
+      <span>
+        <strong>LeadAI</strong>
+        <small>by FMSolutionsPro</small>
+      </span>
+    </a>
+    <span class="demo-badge">Interactive demo</span>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">AI-powered sales operations</span>
+        <h1>Turn every enquiry into a clear sales decision.</h1>
+        <p>
+          FM LeadAI analyses incoming leads, assigns a priority score,
+          identifies the business need and prepares the next best response.
+        </p>
+        <div class="hero-points">
+          <span>✓ Faster follow-up</span>
+          <span>✓ Consistent qualification</span>
+          <span>✓ Better sales focus</span>
+        </div>
+      </div>
+
+      <div class="metric-panel">
+        <div class="metric">
+          <span>Manual review</span>
+          <strong>5–15 min</strong>
+        </div>
+        <div class="metric">
+          <span>FM LeadAI review</span>
+          <strong>&lt; 1 sec</strong>
+        </div>
+        <div class="metric accent">
+          <span>Result</span>
+          <strong>Instant action plan</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <article class="card form-card">
+        <div class="card-heading">
+          <div>
+            <span class="step">01</span>
+            <h2>Incoming lead</h2>
+          </div>
+          <button id="sampleBtn" class="text-button" type="button">Load sample</button>
+        </div>
+
+        <form id="leadForm">
+          <div class="field-grid">
+            <label>
+              Full name
+              <input id="fullName" name="fullName" type="text" placeholder="Sarah Johnson" required />
+            </label>
+            <label>
+              Work email
+              <input id="email" name="email" type="email" placeholder="sarah@company.com" required />
+            </label>
+          </div>
+
+          <div class="field-grid">
+            <label>
+              Company
+              <input id="company" name="company" type="text" placeholder="Northstar Realty" required />
+            </label>
+            <label>
+              Team size
+              <select id="teamSize" name="teamSize" required>
+                <option value="">Select</option>
+                <option value="1">1 person</option>
+                <option value="5">2–5 people</option>
+                <option value="15">6–20 people</option>
+                <option value="50">21–100 people</option>
+                <option value="150">100+ people</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="field-grid">
+            <label>
+              Monthly lead volume
+              <select id="leadVolume" name="leadVolume" required>
+                <option value="">Select</option>
+                <option value="10">Under 20</option>
+                <option value="50">20–100</option>
+                <option value="200">100–500</option>
+                <option value="700">500+</option>
+              </select>
+            </label>
+            <label>
+              Budget range
+              <select id="budget" name="budget" required>
+                <option value="">Select</option>
+                <option value="300">Under €500</option>
+                <option value="1000">€500–€1,500</option>
+                <option value="3000">€1,500–€5,000</option>
+                <option value="8000">€5,000+</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            What would you like to improve?
+            <textarea id="message" name="message" rows="6" placeholder="Describe the current process, problem and desired result..." required></textarea>
+          </label>
+
+          <label>
+            Desired timeline
+            <select id="timeline" name="timeline" required>
+              <option value="">Select</option>
+              <option value="urgent">As soon as possible</option>
+              <option value="month">Within 30 days</option>
+              <option value="quarter">Within 3 months</option>
+              <option value="research">Just researching</option>
+            </select>
+          </label>
+
+          <button class="primary-button" type="submit">
+            Analyse lead
+            <span>→</span>
+          </button>
+        </form>
+      </article>
+
+      <article class="card result-card" id="resultCard" aria-live="polite">
+        <div class="card-heading">
+          <div>
+            <span class="step">02</span>
+            <h2>Qualification report</h2>
+          </div>
+          <span id="statusPill" class="status neutral">Waiting</span>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+          <div class="scanner">
+            <span></span><span></span><span></span>
+          </div>
+          <h3>Ready to analyse</h3>
+          <p>Complete the lead form to generate a sales qualification report.</p>
+        </div>
+
+        <div id="report" class="report hidden">
+          <section class="score-section">
+            <div class="score-ring" id="scoreRing">
+              <strong id="scoreValue">0</strong>
+              <span>/100</span>
+            </div>
+            <div>
+              <span class="label">Lead quality</span>
+              <h3 id="priorityText">—</h3>
+              <p id="priorityReason">—</p>
+            </div>
+          </section>
+
+          <div class="report-grid">
+            <div class="report-box">
+              <span class="label">Detected need</span>
+              <strong id="needText">—</strong>
+            </div>
+            <div class="report-box">
+              <span class="label">Commercial potential</span>
+              <strong id="potentialText">—</strong>
+            </div>
+            <div class="report-box">
+              <span class="label">Recommended response time</span>
+              <strong id="responseTime">—</strong>
+            </div>
+            <div class="report-box">
+              <span class="label">Next best action</span>
+              <strong id="nextAction">—</strong>
+            </div>
+          </div>
+
+          <section class="summary-block">
+            <span class="label">Lead summary</span>
+            <p id="summaryText"></p>
+          </section>
+
+          <section class="response-block">
+            <div class="response-title">
+              <span class="label">Suggested reply</span>
+              <button id="copyBtn" class="text-button" type="button">Copy reply</button>
+            </div>
+            <div id="suggestedReply" class="suggested-reply"></div>
+          </section>
+
+          <div class="disclaimer">
+            Demo mode: this version uses transparent rule-based scoring. A production version can connect to an AI model, CRM, email and automation platform.
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="how-it-works">
+      <div>
+        <span class="eyebrow">Business workflow</span>
+        <h2>From form submission to sales action</h2>
+      </div>
+      <div class="flow">
+        <div><span>1</span><strong>Lead arrives</strong><small>Website, email or CRM</small></div>
+        <i>→</i>
+        <div><span>2</span><strong>System analyses</strong><small>Need, urgency, fit, value</small></div>
+        <i>→</i>
+        <div><span>3</span><strong>Sales team acts</strong><small>Prioritised follow-up</small></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>FM LeadAI</span>
+    <span>Built by FMSolutionsPro</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
